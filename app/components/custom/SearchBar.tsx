@@ -9,7 +9,7 @@ export const SearchBar = () => {
   const { filter, setFilter, form, category } = useFilter()
 
   return (
-    <div className='flex items-center gap-2 flex-wrap md:flex-nowrap'>
+    <div className='flex items-center gap-2 flex-wrap md:flex-nowrap shrink-0'>
       <Input
         placeholder='Search for a product'
         value={filter}

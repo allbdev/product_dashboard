@@ -42,7 +42,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <SidebarTrigger className='-ml-1' />
                 <h1 className='text-lg font-semibold'>Product Dashboard</h1>
               </header>
-              <main className='flex-1 p-4 min-h-0'>{children}</main>
+              <div className='grow p-4 min-h-0 overflow-y-auto'>{children}</div>
             </SidebarInset>
           </SidebarProvider>
           <Toaster />

@@ -39,13 +39,16 @@ The application fetches and displays product data from the [DummyJSON API](https
 │ ├── components/ # React components
 │ │   ├── ui/ # shadcn/ui core components
 │ │   └── custom/ # Custom application components
-│ │       ├── ErrorMessage.tsx # Error display component
-│ │       ├── TableSkeleton.tsx # Loading skeleton
 │ │       ├── AppSidebar.tsx # Sidebar and header
-│ │       ├── SearchBar.tsx # Searching components
+│ │       ├── CategoryRender.tsx # Category display component
+│ │       ├── CategorySelect.tsx # Category selection component
+│ │       ├── ErrorMessage.tsx # Error display component
+│ │       ├── SearchBar.tsx # Search functionality
+│ │       ├── TableSkeleton.tsx # Loading skeleton
 │ │       └── Products/ # Products related components
-│ │           ├── Table.tsx # Product data table
-│ │           └── List.tsx # Product data virtualized list
+│ │           ├── Buttons.tsx # Product action buttons
+│ │           ├── List.tsx # Product data virtualized list
+│ │           └── Table.tsx # Product data table
 │ ├── hooks/ # Custom React hooks
 │ │   ├── useListProducts.ts # Product fetching hook
 │ │   ├── useFilter.tsx # Filtering context

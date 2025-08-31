@@ -88,23 +88,25 @@ export const ProductsList = () => {
   }
 
   return (
-    <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={total}>
-      {({ onRowsRendered, registerChild }) => (
-        <AutoSizer>
-          {({ height, width }) => (
-            <List
-              ref={registerChild}
-              onRowsRendered={onRowsRendered}
-              rowRenderer={rowRenderer}
-              rowCount={loadedProductsCount}
-              height={height}
-              width={width}
-              rowHeight={cache.rowHeight}
-            />
-          )}
-        </AutoSizer>
-      )}
-    </InfiniteLoader>
+    <div className='grow'>
+      <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={total}>
+        {({ onRowsRendered, registerChild }) => (
+          <AutoSizer>
+            {({ height, width }) => (
+              <List
+                ref={registerChild}
+                onRowsRendered={onRowsRendered}
+                rowRenderer={rowRenderer}
+                rowCount={loadedProductsCount}
+                height={height}
+                width={width}
+                rowHeight={cache.rowHeight}
+              />
+            )}
+          </AutoSizer>
+        )}
+      </InfiniteLoader>
+    </div>
   )
 }
 
