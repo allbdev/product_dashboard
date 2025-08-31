@@ -1,87 +1,139 @@
-# Welcome to React Router!
+# 📊 Product Dashboard
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern, responsive product dashboard built with **React Router v7**, **TanStack Query**, **shadcn/ui**, and **TailwindCSS**.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+The application fetches and displays product data from the [DummyJSON API](https://dummyjson.com/) with realistic loading states (200-1200ms delay) to simulate real-world network conditions.
 
-## Features
+## 🚀 Live Demo
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+**[View Live Application](https://product-dashboard-coral.vercel.app/)**
 
-## Getting Started
+## ✨ Features
+
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+- ⚡ **Fast Loading** - Optimized with React Router v7 and TanStack Query
+- 🎨 **Modern UI** - Built with shadcn/ui components and TailwindCSS
+- 🔄 **Smart Caching** - Efficient data fetching and caching with TanStack Query
+- 💀 **Loading States** - Skeleton loaders for better UX
+- ❌ **Error Handling** - Graceful error states and user feedback
+- 🐳 **Docker Ready** - Containerized for easy deployment
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: React 19 + React Router v7
+- **Styling**: TailwindCSS v4 + shadcn/ui
+- **State Management**: TanStack Query v5
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **Linting**: ESLint + Prettier
+- **Icons**: Lucide React
+
+## 📁 Project Structure
+
+├── app/
+│ ├── api/ # API layer
+│ │ ├── api.types.ts # Generic API types
+│ │ ├── products.ts # Product API calls
+│ │ └── products.types.ts # Product-specific types
+│ ├── components/ # React components
+│ │ ├── ui/ # shadcn/ui core components
+│ │ └── custom/ # Custom application components
+│ │ ├── ErrorMessage.tsx # Error display component
+│ │ ├── ProductsTable.tsx # Product data table
+│ │ └── TableSkeleton.tsx # Loading skeleton
+│ ├── hooks/ # Custom React hooks
+│ │ └── useListProducts.ts # Product fetching hook
+│ ├── lib/ # Utility functions
+│ │ └── utils.ts # shadcn/ui utilities
+│ └── home/ # Pages
+│ └── home.tsx # Main dashboard page
+├── public/ # Static assets
+├── Dockerfile # Docker configuration
+└── package.json # Dependencies and scripts
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
 
 ### Installation
 
-Install the dependencies:
+1. **Clone the repository**
 
-```bash
-npm install
-```
+   ```bash
+   git clone <repository-url>
+   cd product-dashboard
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
 ### Development
 
-Start the development server with HMR:
+Start the development server with hot module replacement:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Your application will be available at **http://localhost:5173**
 
-## Building for Production
+### Available Scripts
 
-Create a production build:
+```bash
+npm run dev          # Start development server
+npm run build        # Create production build
+npm run start        # Start production server
+npm run typecheck    # Run TypeScript type checking
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues automatically
+npm run format       # Format code with Prettier
+npm run format:check # Check code formatting
+```
+
+## 🏗️ Building for Production
+
+Create an optimized production build:
 
 ```bash
 npm run build
 ```
 
-## Deployment
+The build artifacts will be stored in the `build/` directory.
 
-### Docker Deployment
+## 🐳 Docker Deployment
 
-To build and run using Docker:
+### Build and Run with Docker
 
 ```bash
-docker build -t my-app .
+# Build the Docker image
+docker build -t product-dashboard .
 
 # Run the container
-docker run -p 3000:3000 my-app
+docker run -p 3000:3000 product-dashboard
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### Supported Deployment Platforms
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+The containerized application can be deployed to:
 
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- **☁️ Cloud Platforms**
+  - AWS ECS
+  - Google Cloud Run
+  - Azure Container Apps
+- **🚀 Platform-as-a-Service**
+  - Vercel
+  - Netlify
+  - Railway
+  - Fly.io
+- **🌊 Container Platforms**
+  - Digital Ocean App Platform
+  - Heroku Container Registry
 
 ---
 
-Built with ❤️ using React Router.
+**Built with ❤️ using modern React ecosystem**
