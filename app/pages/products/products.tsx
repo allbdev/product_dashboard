@@ -14,9 +14,15 @@ export function Products() {
 
   return (
     <FilterProvider>
-      <div className='size-full p-4 flex flex-col gap-4'>
+      <div className='size-full p-4 flex flex-col gap-4 min-w-0'>
         <SearchBar />
-        {!isMobile ? <ProductsTable /> : <ProductsList />}
+        {!isMobile ? (
+          <div className='flex-1 min-h-0'>
+            <ProductsTable />
+          </div>
+        ) : (
+          <ProductsList />
+        )}
       </div>
       <Outlet />
     </FilterProvider>

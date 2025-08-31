@@ -23,16 +23,16 @@ export const ProductsTable = () => {
   }
 
   return (
-    <div className='h-full overflow-auto'>
-      <Table className='relative'>
+    <div className='h-full w-full overflow-auto'>
+      <Table className='relative table-fixed w-full'>
         <TableHeader className='sticky border-none top-0 z-10 bg-white shadow-[0_1px_0_0_rgb(229,231,235)]'>
           <TableRow>
-            <TableHead className='w-32'>Title</TableHead>
-            <TableHead className='max-w-36'>Description</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Stock</TableHead>
-            <TableHead />
+            <TableHead style={{ width: '30%' }}>Title</TableHead>
+            <TableHead style={{ width: '30%' }}>Description</TableHead>
+            <TableHead style={{ width: '15%' }}>Category</TableHead>
+            <TableHead style={{ width: '8%' }}>Price</TableHead>
+            <TableHead style={{ width: '7%' }}>Stock</TableHead>
+            <TableHead style={{ width: '10%', minWidth: '80px' }} />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,23 +45,29 @@ export const ProductsTable = () => {
           ) : (
             products.data?.data?.products.map(product => (
               <TableRow key={product.id}>
-                <TableCell title={product.title} className='w-32'>
-                  <div className='flex items-center gap-2'>
-                    <img src={product.thumbnail} alt={product.title} className='size-10' />
+                <TableCell title={product.title}>
+                  <div className='flex items-center gap-2 min-w-0'>
+                    <img src={product.thumbnail} alt={product.title} className='size-10 shrink-0' />
                     <span className='truncate'>{product.title}</span>
                   </div>
                 </TableCell>
-                <TableCell title={product.description} className='max-w-36 truncate'>
-                  {product.description}
+                <TableCell title={product.description}>
+                  <div className='truncate'>{product.description}</div>
                 </TableCell>
                 <TableCell>
-                  <CategoryRender category={product.category} />
+                  <div className='truncate'>
+                    <CategoryRender category={product.category} />
+                  </div>
                 </TableCell>
                 <TableCell>
-                  {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+                  <div className='truncate'>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+                  </div>
                 </TableCell>
-                <TableCell>{product.stock}</TableCell>
-                <TableCell className='w-10'>
+                <TableCell>
+                  <div className='truncate'>{product.stock}</div>
+                </TableCell>
+                <TableCell>
                   <Buttons product={product} />
                 </TableCell>
               </TableRow>

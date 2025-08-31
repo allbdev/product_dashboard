@@ -9,7 +9,7 @@ export const SearchBar = () => {
   const { filter, setFilter, form, category } = useFilter()
 
   return (
-    <div className='flex items-center gap-2 flex-wrap md:flex-nowrap shrink-0'>
+    <div className='flex items-center gap-2 flex-wrap md:flex-nowrap shrink-0 min-w-0'>
       <Input
         placeholder='Search for a product'
         value={filter}
@@ -17,9 +17,10 @@ export const SearchBar = () => {
           setFilter(e.target.value)
           form.setValue('category', '')
         }}
+        className='min-w-0'
       />
-      <div className='flex items-center gap-2 w-full justify-end md:w-fit md:justify-normal'>
-        <div className='w-56 flex items-center gap-2'>
+      <div className='flex items-center gap-2 w-full justify-end md:w-fit md:justify-normal min-w-0'>
+        <div className='w-56 flex items-center gap-2 min-w-0'>
           <CategorySelect control={form.control} onChange={() => setFilter('')} />
           {category && (
             <Button
