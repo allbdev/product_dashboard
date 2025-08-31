@@ -33,21 +33,21 @@ The application fetches and displays product data from the [DummyJSON API](https
 ```
 ├── app/
 │ ├── api/ # API layer
-│ │ ├── api.types.ts # Generic API types
-│ │ ├── products.ts # Product API calls
-│ │ └── products.types.ts # Product-specific types
+│ │   ├── api.types.ts # Generic API types
+│ │   ├── products.ts # Product API calls
+│ │   └── products.types.ts # Product-specific types
 │ ├── components/ # React components
-│ │ ├── ui/ # shadcn/ui core components
-│ │ └── custom/ # Custom application components
-│ │ ├── ErrorMessage.tsx # Error display component
-│ │ ├── ProductsTable.tsx # Product data table
-│ │ └── TableSkeleton.tsx # Loading skeleton
+│ │   ├── ui/ # shadcn/ui core components
+│ │   └── custom/ # Custom application components
+│ │       ├── ErrorMessage.tsx # Error display component
+│ │       ├── ProductsTable.tsx # Product data table
+│ │       └── TableSkeleton.tsx # Loading skeleton
 │ ├── hooks/ # Custom React hooks
-│ │ └── useListProducts.ts # Product fetching hook
+│ │   └── useListProducts.ts # Product fetching hook
 │ ├── lib/ # Utility functions
-│ │ └── utils.ts # shadcn/ui utilities
+│ │   └── utils.ts # shadcn/ui utilities
 │ └── home/ # Pages
-│ └── home.tsx # Main dashboard page
+│     └── home.tsx # Main dashboard page
 ├── public/ # Static assets
 ├── Dockerfile # Docker configuration
 └── package.json # Dependencies and scripts
