@@ -40,10 +40,13 @@ The application fetches and displays product data from the [DummyJSON API](https
 │ │   ├── ui/ # shadcn/ui core components
 │ │   └── custom/ # Custom application components
 │ │       ├── ErrorMessage.tsx # Error display component
-│ │       ├── ProductsTable.tsx # Product data table
-│ │       └── TableSkeleton.tsx # Loading skeleton
+│ │       ├── TableSkeleton.tsx # Loading skeleton
+│ │       └── Products # Products related components
+│ │           ├── Table.tsx # Product data table
+│ │           └── List.tsx # Product data virtualized list
 │ ├── hooks/ # Custom React hooks
 │ │   └── useListProducts.ts # Product fetching hook
+│ │   └── useScreenSize.ts # Check if is mobile or desktop screen
 │ ├── lib/ # Utility functions
 │ │   └── utils.ts # shadcn/ui utilities
 │ └── home/ # Pages

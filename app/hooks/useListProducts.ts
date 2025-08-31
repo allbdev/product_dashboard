@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { getProducts } from '~/api/products'
 import { useRef, useState } from 'react'
 import type { ListProductsResponse } from '~/api/products.types'
@@ -54,5 +54,43 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
     hasNextPage,
     hasPreviousPage,
     isLoadingNextOrPreviousPage: isFetching && isPlaceholderData && !firstLoad.current
+  }
+}
+
+export const useListProductsInfinite = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
+  const { data, error, isLoading, isFetching, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage } =
+    useInfiniteQuery({
+      queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit],
+      queryFn: ({ pageParam = 1 }) => getProducts({ page: pageParam, limit }),
+      getNextPageParam: (lastPage, pages) => {
+        const currentTotal = pages.length * limit
+
+        return lastPage.data.total > currentTotal ? pages.length + 1 : undefined
+      },
+      getPreviousPageParam: (_, pages) => {
+        return pages.length > 1 ? pages.length - 1 : undefined
+      },
+      initialPageParam: 1
+    })
+
+  return {
+    data: data
+      ? {
+          data: {
+            products: data.pages.flatMap(page => page.data.products),
+            total: data.pages[0]?.data.total || 0,
+            skip: 0,
+            limit: data.pages.reduce((acc, page) => acc + page.data.products.length, 0)
+          },
+          error: data.pages.find(page => page.error)?.error
+        }
+      : undefined,
+    isLoading,
+    error,
+    getNextPage: () => fetchNextPage(),
+    getPreviousPage: () => fetchPreviousPage(),
+    hasNextPage: hasNextPage || false,
+    hasPreviousPage: hasPreviousPage || false,
+    isLoadingNextOrPreviousPage: isFetching && !isLoading
   }
 }

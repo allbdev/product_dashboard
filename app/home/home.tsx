@@ -1,22 +1,9 @@
-import { ErrorMessage } from '~/components/custom/ErrorMessage'
-import { ProductsTable } from '~/components/custom/ProductsTable'
-import { TableSkeleton } from '~/components/custom/TableSkeleton'
-import { useListProducts } from '~/hooks/useListProducts'
+import { ProductsTable } from '~/components/custom/Products/Table'
+import { ProductsList } from '~/components/custom/Products/List'
+import { useScreenSize } from '~/hooks/useSreenSize'
 
 export function Home() {
-  const products = useListProducts({})
+  const { isWide } = useScreenSize()
 
-  return (
-    <main className='size-full p-4'>
-      {(products.isLoading ?? !products.data) ? (
-        <TableSkeleton />
-      ) : products.data.error ? (
-        <ErrorMessage message={products.data.error.message} />
-      ) : products.error ? (
-        <ErrorMessage message={products.error.message} />
-      ) : (
-        <ProductsTable products={products} />
-      )}
-    </main>
-  )
+  return <main className='size-full p-4'>{isWide ? <ProductsTable /> : <ProductsList />}</main>
 }

@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import 'react-virtualized/styles.css'
 
 import type { Route } from './+types/root'
 import './app.css'

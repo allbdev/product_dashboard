@@ -1,8 +1,24 @@
-import type { UseListProductsReturn } from '~/hooks/useListProducts'
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../ui/table'
-import { Button } from '../ui/button'
+import { useListProducts } from '~/hooks/useListProducts'
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../../ui/table'
+import { Button } from '../../ui/button'
+import { ErrorMessage } from '../ErrorMessage'
+import { TableSkeleton } from '../TableSkeleton'
 
-export const ProductsTable = ({ products }: { products: UseListProductsReturn }) => {
+export const ProductsTable = () => {
+  const products = useListProducts({})
+
+  if (products.isLoading ?? !products.data) {
+    return <TableSkeleton />
+  }
+
+  if (products.data.error) {
+    return <ErrorMessage message={products.data.error.message} />
+  }
+
+  if (products.error) {
+    return <ErrorMessage message={products.error.message} />
+  }
+
   return (
     <Table>
       <TableHeader>
@@ -20,7 +36,7 @@ export const ProductsTable = ({ products }: { products: UseListProductsReturn })
             <TableCell title={product.title} className='w-32 truncate'>
               {product.title}
             </TableCell>
-            <TableCell title={product.description} className='max-w-44 truncate'>
+            <TableCell title={product.description} className='max-w-36 truncate'>
               {product.description}
             </TableCell>
             <TableCell>{product.category}</TableCell>
