@@ -77,6 +77,14 @@ export const ProductsList = () => {
     return <ErrorMessage message={error.message} />
   }
 
+  if (data?.data?.products.length === 0) {
+    return (
+      <div className='flex justify-center items-center text-center h-full'>
+        No products found, try changing the search query
+      </div>
+    )
+  }
+
   return (
     <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={total}>
       {({ onRowsRendered, registerChild }) => (

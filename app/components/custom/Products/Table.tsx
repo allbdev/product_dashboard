@@ -33,24 +33,32 @@ export const ProductsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.data?.data?.products.map(product => (
-            <TableRow key={product.id}>
-              <TableCell title={product.title} className='w-32'>
-                <div className='flex items-center gap-2'>
-                  <img src={product.thumbnail} alt={product.title} className='size-10' />
-                  <span className='truncate'>{product.title}</span>
-                </div>
+          {products.data?.data?.products.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} className='text-center' style={{ height: 'calc(10 * 2.7rem)' }}>
+                No products found, try changing the search query
               </TableCell>
-              <TableCell title={product.description} className='max-w-36 truncate'>
-                {product.description}
-              </TableCell>
-              <TableCell>{product.category}</TableCell>
-              <TableCell>
-                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
-              </TableCell>
-              <TableCell>{product.stock}</TableCell>
             </TableRow>
-          ))}
+          ) : (
+            products.data?.data?.products.map(product => (
+              <TableRow key={product.id}>
+                <TableCell title={product.title} className='w-32'>
+                  <div className='flex items-center gap-2'>
+                    <img src={product.thumbnail} alt={product.title} className='size-10' />
+                    <span className='truncate'>{product.title}</span>
+                  </div>
+                </TableCell>
+                <TableCell title={product.description} className='max-w-36 truncate'>
+                  {product.description}
+                </TableCell>
+                <TableCell>{product.category}</TableCell>
+                <TableCell>
+                  {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+                </TableCell>
+                <TableCell>{product.stock}</TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
         <TableFooter className='sticky border-none bottom-0 z-10 bg-muted shadow-[0_-1px_0_0_rgb(229,231,235)]'>
           <TableRow>
