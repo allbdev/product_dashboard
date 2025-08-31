@@ -21,44 +21,46 @@ export const ProductsTable = () => {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className='w-32'>Name</TableHead>
-          <TableHead className='max-w-36'>Description</TableHead>
-          <TableHead>Category</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>Stock</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {products.data?.data?.products.map(product => (
-          <TableRow key={product.id}>
-            <TableCell title={product.title} className='w-32'>
-              <div className='flex items-center gap-2'>
-                <img src={product.thumbnail} alt={product.title} className='size-10' />
-                <span className='truncate'>{product.title}</span>
-              </div>
-            </TableCell>
-            <TableCell title={product.description} className='max-w-36 truncate'>
-              {product.description}
-            </TableCell>
-            <TableCell>{product.category}</TableCell>
-            <TableCell>
-              {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
-            </TableCell>
-            <TableCell>{product.stock}</TableCell>
+    <div className='h-full overflow-auto'>
+      <Table className='relative'>
+        <TableHeader className='sticky border-none top-0 z-10 bg-white shadow-[0_1px_0_0_rgb(229,231,235)]'>
+          <TableRow>
+            <TableHead className='w-32'>Name</TableHead>
+            <TableHead className='max-w-36'>Description</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead>Stock</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={5}>
-            <Pagination products={products} />
-          </TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {products.data?.data?.products.map(product => (
+            <TableRow key={product.id}>
+              <TableCell title={product.title} className='w-32'>
+                <div className='flex items-center gap-2'>
+                  <img src={product.thumbnail} alt={product.title} className='size-10' />
+                  <span className='truncate'>{product.title}</span>
+                </div>
+              </TableCell>
+              <TableCell title={product.description} className='max-w-36 truncate'>
+                {product.description}
+              </TableCell>
+              <TableCell>{product.category}</TableCell>
+              <TableCell>
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+              </TableCell>
+              <TableCell>{product.stock}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter className='sticky border-none bottom-0 z-10 bg-muted shadow-[0_-1px_0_0_rgb(229,231,235)]'>
+          <TableRow>
+            <TableCell colSpan={5}>
+              <Pagination products={products} />
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   )
 }
 
