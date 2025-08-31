@@ -41,12 +41,15 @@ The application fetches and displays product data from the [DummyJSON API](https
 │ │   └── custom/ # Custom application components
 │ │       ├── ErrorMessage.tsx # Error display component
 │ │       ├── TableSkeleton.tsx # Loading skeleton
+│ │       ├── AppSidebar.tsx # Sidebar and header
+│ │       ├── SearchBar.tsx # Searching components
 │ │       └── Products # Products related components
 │ │           ├── Table.tsx # Product data table
 │ │           └── List.tsx # Product data virtualized list
 │ ├── hooks/ # Custom React hooks
-│ │   └── useListProducts.ts # Product fetching hook
-│ │   └── useScreenSize.ts # Check if is mobile or desktop screen
+│ │   ├── useListProducts.ts # Product fetching hook
+│ │   ├── useFilter.tsx # Filtering context
+│ │   └── use-mobile.ts # Shadcn hook to check screen size
 │ ├── lib/ # Utility functions
 │ │   └── utils.ts # shadcn/ui utilities
 │ └── home/ # Pages

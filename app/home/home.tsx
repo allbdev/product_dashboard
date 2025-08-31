@@ -1,13 +1,22 @@
 import { ProductsTable } from '~/components/custom/Products/Table'
 import { ProductsList } from '~/components/custom/Products/List'
-import { useScreenSize } from '~/hooks/useSreenSize'
+import { useIsMobile } from '~/hooks/use-mobile'
+import { FilterProvider } from '~/hooks/useFilter'
+import { SearchBar } from '~/components/custom/SearchBar'
 
 export function Home() {
-  const { isWide } = useScreenSize()
+  const isMobile = useIsMobile()
 
-  if (isWide === undefined) {
+  if (isMobile === undefined) {
     return null
   }
 
-  return <div className='size-full p-4'>{isWide ? <ProductsTable /> : <ProductsList />}</div>
+  return (
+    <FilterProvider>
+      <div className='size-full p-4 flex flex-col gap-4'>
+        <SearchBar />
+        {!isMobile ? <ProductsTable /> : <ProductsList />}
+      </div>
+    </FilterProvider>
+  )
 }

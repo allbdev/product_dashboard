@@ -1,8 +1,9 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { getProducts } from '~/api/products'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ListProductsResponse } from '~/api/products.types'
 import type { DefaultErrorResponse } from '~/api/api.types'
+import { useFilter } from './useFilter'
 
 interface UseListProductsProps {
   limit?: number
@@ -30,10 +31,16 @@ export const PRODUCTS_QUERY_KEY = 'products'
 export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
   const firstLoad = useRef(true)
   const [page, setPage] = useState(1)
+  const { debouncedFilter } = useFilter()
+
+  useEffect(() => {
+    // Reset page to 1 when filter changes
+    setPage(1)
+  }, [debouncedFilter])
 
   const { data, error, isLoading, isFetching, isPlaceholderData } = useQuery({
-    queryKey: [PRODUCTS_QUERY_KEY, page, limit],
-    queryFn: () => getProducts({ page, limit }),
+    queryKey: [PRODUCTS_QUERY_KEY, page, limit, debouncedFilter],
+    queryFn: () => getProducts({ page, limit, filter: debouncedFilter }),
     placeholderData: prev => prev
   })
 
@@ -72,10 +79,13 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
 }
 
 export const useListProductsInfinite = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
+  const { debouncedFilter, filter } = useFilter()
+  console.log('debouncedFilter', debouncedFilter)
+  console.log('filter', filter)
   const { data, error, isLoading, isFetching, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage } =
     useInfiniteQuery({
-      queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit],
-      queryFn: ({ pageParam = 1 }) => getProducts({ page: pageParam, limit }),
+      queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit, debouncedFilter],
+      queryFn: ({ pageParam = 1 }) => getProducts({ page: pageParam, limit, filter: debouncedFilter }),
       getNextPageParam: (lastPage, pages) => {
         const currentTotal = pages.length * limit
 

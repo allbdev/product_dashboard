@@ -3,18 +3,28 @@ import type { ListProductsResponse } from './products.types'
 
 export const getProducts = async ({
   page,
-  limit
+  limit,
+  filter
 }: {
   page: number
   limit: number
+  filter: string
 }): Promise<{
   data: ListProductsResponse
   error?: DefaultErrorResponse
 }> => {
   try {
-    const response = await fetch(
-      `https://dummyjson.com/products?skip=${(page - 1) * limit}&limit=${limit}&delay=${randomDelay()}`
-    )
+    let response
+
+    if (!filter) {
+      response = await fetch(
+        `https://dummyjson.com/products?skip=${(page - 1) * limit}&limit=${limit}&delay=${randomDelay()}`
+      )
+    } else {
+      response = await fetch(
+        `https://dummyjson.com/products/search?q=${filter}&skip=${(page - 1) * limit}&limit=${limit}&delay=${randomDelay()}`
+      )
+    }
     const data = await response.json()
 
     if ('message' in data) {
