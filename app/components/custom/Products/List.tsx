@@ -9,8 +9,13 @@ export const ProductsList = () => {
     limit: 50
   })
 
-  const loadedProductsCount = data?.data?.products.length || 0
+  // total is the total number of products that we expect to have
   const total = data?.data?.total || 0
+
+  const isAllLoaded = data?.data?.products.length === total
+
+  // loadedProductsCount is the number of products that we have loaded + 1 for the loading indicator
+  const loadedProductsCount = isAllLoaded ? total : (data?.data?.products.length || 0) + 1
 
   // Only load 1 page of items at a time.
   // Pass an empty callback to InfiniteLoader in case it asks us to load more than once.
@@ -18,7 +23,7 @@ export const ProductsList = () => {
     isLoadingNextOrPreviousPage || isLoading ? () => Promise.resolve() : () => Promise.resolve(getNextPage())
 
   // A row is loaded if we have the product data for that index
-  const isRowLoaded = ({ index }: { index: number }) => index < loadedProductsCount
+  const isRowLoaded = ({ index }: { index: number }) => index < (isAllLoaded ? total : loadedProductsCount - 1)
 
   // Render a list item or a loading indicator.
   const rowRenderer = ({ index, key, style }: { index: number; key: string; style: CSSProperties }) => {
