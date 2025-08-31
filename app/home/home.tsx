@@ -5,5 +5,9 @@ import { useScreenSize } from '~/hooks/useSreenSize'
 export function Home() {
   const { isWide } = useScreenSize()
 
+  if (isWide === undefined) {
+    return null
+  }
+
   return <main className='size-full p-4'>{isWide ? <ProductsTable /> : <ProductsList />}</main>
 }

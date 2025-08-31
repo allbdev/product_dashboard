@@ -1,8 +1,14 @@
 import { useListProductsInfinite } from '~/hooks/useListProducts'
-import { AutoSizer, InfiniteLoader, List } from 'react-virtualized'
+import { AutoSizer, InfiniteLoader, List, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import type { CSSProperties } from 'react'
-import { TableSkeleton } from '../TableSkeleton'
 import { ErrorMessage } from '../ErrorMessage'
+import type { Product } from '~/api/products.types'
+import { Skeleton } from '~/components/ui/skeleton'
+
+const cache = new CellMeasurerCache({
+  fixedWidth: true,
+  defaultHeight: 140
+})
 
 export const ProductsList = () => {
   const { data, isLoadingNextOrPreviousPage, getNextPage, isLoading, error } = useListProductsInfinite({
@@ -26,24 +32,41 @@ export const ProductsList = () => {
   const isRowLoaded = ({ index }: { index: number }) => index < (isAllLoaded ? total : loadedProductsCount - 1)
 
   // Render a list item or a loading indicator.
-  const rowRenderer = ({ index, key, style }: { index: number; key: string; style: CSSProperties }) => {
+  const rowRenderer = ({
+    index,
+    key,
+    style,
+    parent
+  }: {
+    index: number
+    key: string
+    style: CSSProperties
+    parent: any
+  }) => {
     let content
+    let loading = false
 
     if (!isRowLoaded({ index })) {
-      content = 'Loading...'
+      loading = true
     } else {
-      content = data?.data?.products[index]?.title
+      content = data?.data?.products[index]
     }
 
     return (
-      <div key={key} style={style}>
-        {content}
-      </div>
+      <CellMeasurer cache={cache} key={key} parent={parent} rowIndex={index}>
+        <div style={style}>{loading ? <ProductItemSkeleton /> : <ProductItem product={content!} />}</div>
+      </CellMeasurer>
     )
   }
 
-  if (isLoading ?? !data) {
-    return <TableSkeleton />
+  if (isLoading || !data) {
+    return (
+      <div className='flex flex-col gap-2'>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <ProductItemSkeleton key={index} />
+        ))}
+      </div>
+    )
   }
 
   if (data.error) {
@@ -66,11 +89,57 @@ export const ProductsList = () => {
               rowCount={loadedProductsCount}
               height={height}
               width={width}
-              rowHeight={30}
+              rowHeight={cache.rowHeight}
             />
           )}
         </AutoSizer>
       )}
     </InfiniteLoader>
+  )
+}
+
+const ProductItem = ({ product }: { product: Product }) => {
+  return (
+    <div className='flex flex-col gap-2 border-b border-gray-200 p-2'>
+      <div className='flex gap-2'>
+        <img src={product.thumbnail} alt={product.title} className='object-contain size-20' />
+        <div>
+          <div className='text-sm font-medium'>{product.title}</div>
+          <div className='flex items-center gap-1'>
+            <div>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
+            <div className='text-sm text-gray-500'>- {product.stock} in stock</div>
+          </div>
+        </div>
+      </div>
+      <div className='text-sm text-gray-500 flex-1 line-clamp-5'>{product.description}</div>
+    </div>
+  )
+}
+
+const ProductItemSkeleton = () => {
+  return (
+    <div className='flex flex-col gap-2 border-b border-gray-200 p-2'>
+      <div className='flex gap-2'>
+        <Skeleton className='size-20' />
+        <div>
+          <div className='text-sm font-medium mb-2'>
+            <Skeleton className='w-20 h-4' />
+          </div>
+          <div className='flex items-center gap-1'>
+            <div>
+              <Skeleton className='w-20 h-4' />
+            </div>
+            <div className='text-sm text-gray-500'>
+              <Skeleton className='w-20 h-4' />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='text-sm text-gray-500 flex-1 line-clamp-5 space-y-2'>
+        <Skeleton className='w-full h-4' />
+        <Skeleton className='w-full h-4' />
+        <Skeleton className='w-full h-4' />
+      </div>
+    </div>
   )
 }
