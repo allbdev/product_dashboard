@@ -4,6 +4,7 @@ import { Button } from '../../ui/button'
 import { ErrorMessage } from '../ErrorMessage'
 import { TableSkeleton } from '../TableSkeleton'
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { Buttons } from './Buttons'
 
 export const ProductsTable = () => {
   const products = useListProducts({})
@@ -30,6 +31,7 @@ export const ProductsTable = () => {
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Stock</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -56,13 +58,16 @@ export const ProductsTable = () => {
                   {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
                 </TableCell>
                 <TableCell>{product.stock}</TableCell>
+                <TableCell className='w-10'>
+                  <Buttons productId={product.id.toString()} />
+                </TableCell>
               </TableRow>
             ))
           )}
         </TableBody>
         <TableFooter className='sticky border-none bottom-0 z-10 bg-muted shadow-[0_-1px_0_0_rgb(229,231,235)]'>
           <TableRow>
-            <TableCell colSpan={5}>
+            <TableCell colSpan={6}>
               <Pagination products={products} />
             </TableCell>
           </TableRow>

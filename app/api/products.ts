@@ -64,3 +64,19 @@ export const createProduct = async (product: Product) => {
 
   return response.json()
 }
+
+export const updateProduct = async (productId: string, product: Product) => {
+  const response = await fetch(`https://dummyjson.com/products/${productId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(product)
+  })
+
+  return response.json()
+}
+
+export const getProduct = async (productId: string): Promise<Product> => {
+  const response = await fetch(`https://dummyjson.com/products/${productId}`)
+
+  return response.json()
+}
