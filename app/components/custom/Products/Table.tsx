@@ -59,7 +59,7 @@ export const ProductsTable = () => {
                 </TableCell>
                 <TableCell>{product.stock}</TableCell>
                 <TableCell className='w-10'>
-                  <Buttons productId={product.id.toString()} />
+                  <Buttons product={product} />
                 </TableCell>
               </TableRow>
             ))

@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react'
 import { ErrorMessage } from '../ErrorMessage'
 import type { Product } from '~/api/products.types'
 import { Skeleton } from '~/components/ui/skeleton'
+import { Buttons } from './Buttons'
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -117,6 +118,9 @@ const ProductItem = ({ product }: { product: Product }) => {
             <div>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
             <div className='text-sm text-gray-500'>- {product.stock} in stock</div>
           </div>
+        </div>
+        <div className='flex grow justify-end'>
+          <Buttons product={product} />
         </div>
       </div>
       <div className='text-sm text-gray-500 flex-1 line-clamp-5'>{product.description}</div>

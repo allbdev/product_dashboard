@@ -80,3 +80,11 @@ export const getProduct = async (productId: string): Promise<Product> => {
 
   return response.json()
 }
+
+export const deleteProduct = async (productId: string) => {
+  const response = await fetch(`https://dummyjson.com/products/${productId}`, {
+    method: 'DELETE'
+  })
+
+  return response.json()
+}
