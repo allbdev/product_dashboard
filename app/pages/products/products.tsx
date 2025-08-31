@@ -3,8 +3,9 @@ import { ProductsList } from '~/components/custom/Products/List'
 import { useIsMobile } from '~/hooks/use-mobile'
 import { FilterProvider } from '~/hooks/useFilter'
 import { SearchBar } from '~/components/custom/SearchBar'
+import { Outlet } from 'react-router'
 
-export function Home() {
+export function Products() {
   const isMobile = useIsMobile()
 
   if (isMobile === undefined) {
@@ -17,6 +18,7 @@ export function Home() {
         <SearchBar />
         {!isMobile ? <ProductsTable /> : <ProductsList />}
       </div>
+      <Outlet />
     </FilterProvider>
   )
 }

@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { getProducts } from '~/api/products'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ListProductsResponse } from '~/api/products.types'
 import type { DefaultErrorResponse } from '~/api/api.types'
 import { useFilter } from './useFilter'
@@ -29,14 +29,14 @@ export interface UseListProductsReturn {
 export const PRODUCTS_QUERY_KEY = 'products'
 
 export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
+  const { page, setPage } = useFilter()
   const firstLoad = useRef(true)
-  const [page, setPage] = useState(1)
   const { debouncedFilter } = useFilter()
 
   useEffect(() => {
     // Reset page to 1 when filter changes
     setPage(1)
-  }, [debouncedFilter])
+  }, [debouncedFilter, setPage])
 
   const { data, error, isLoading, isFetching, isPlaceholderData } = useQuery({
     queryKey: [PRODUCTS_QUERY_KEY, page, limit, debouncedFilter],
@@ -79,9 +79,7 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
 }
 
 export const useListProductsInfinite = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
-  const { debouncedFilter, filter } = useFilter()
-  console.log('debouncedFilter', debouncedFilter)
-  console.log('filter', filter)
+  const { debouncedFilter } = useFilter()
   const { data, error, isLoading, isFetching, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage } =
     useInfiniteQuery({
       queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit, debouncedFilter],

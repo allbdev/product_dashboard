@@ -1,5 +1,5 @@
 import type { Route } from './+types/home'
-import { Home } from '../home/home'
+import { Home } from '../pages/home/home'
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Products dashboard' }, { name: 'description', content: 'Welcome to the products dashboard' }]

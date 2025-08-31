@@ -10,15 +10,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '~/components/ui/sidebar'
-import { Package } from 'lucide-react'
-import { Link } from 'react-router'
+import { Package, House } from 'lucide-react'
+import { NavLink } from 'react-router'
 
 const menuItems = [
   {
+    title: 'Home',
+    icon: House,
+    url: '/'
+  },
+  {
     title: 'Products',
     icon: Package,
-    url: '/',
-    isActive: true
+    url: '/products'
   }
 ]
 
@@ -44,12 +48,16 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map(item => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
-                    <Link to={item.url}>
-                      <item.icon className='size-4' />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
+                  <NavLink to={item.url} className='cursor-pointer'>
+                    {({ isActive }) => (
+                      <SidebarMenuButton isActive={isActive}>
+                        <>
+                          <item.icon className='size-4' />
+                          <span>{item.title}</span>
+                        </>
+                      </SidebarMenuButton>
+                    )}
+                  </NavLink>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

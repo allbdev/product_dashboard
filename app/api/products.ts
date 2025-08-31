@@ -1,5 +1,5 @@
 import type { DefaultErrorResponse } from './api.types'
-import type { ListProductsResponse } from './products.types'
+import type { ListProductsResponse, Product } from './products.types'
 
 export const getProducts = async ({
   page,
@@ -53,4 +53,14 @@ export const getProducts = async ({
 
 function randomDelay() {
   return Math.floor(Math.random() * 1000) + 200
+}
+
+export const createProduct = async (product: Product) => {
+  const response = await fetch('https://dummyjson.com/products/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(product)
+  })
+
+  return response.json()
 }

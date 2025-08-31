@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { useFilter } from '~/hooks/useFilter'
@@ -12,12 +13,12 @@ export const SearchBar = () => {
         className='w-56'
         value={filter}
         onChange={e => {
-          console.log('1')
-          console.log('e.target.value', e.target.value)
           setFilter(e.target.value)
         }}
       />
-      <Button>Add Product</Button>
+      <NavLink to='/products/create_product'>
+        <Button>Add Product</Button>
+      </NavLink>
     </div>
   )
 }

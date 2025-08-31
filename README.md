@@ -43,7 +43,7 @@ The application fetches and displays product data from the [DummyJSON API](https
 │ │       ├── TableSkeleton.tsx # Loading skeleton
 │ │       ├── AppSidebar.tsx # Sidebar and header
 │ │       ├── SearchBar.tsx # Searching components
-│ │       └── Products # Products related components
+│ │       └── Products/ # Products related components
 │ │           ├── Table.tsx # Product data table
 │ │           └── List.tsx # Product data virtualized list
 │ ├── hooks/ # Custom React hooks
@@ -52,10 +52,26 @@ The application fetches and displays product data from the [DummyJSON API](https
 │ │   └── use-mobile.ts # Shadcn hook to check screen size
 │ ├── lib/ # Utility functions
 │ │   └── utils.ts # shadcn/ui utilities
-│ └── home/ # Pages
-│     └── home.tsx # Main dashboard page
+│ ├── pages/ # Page components
+│ │   ├── home/
+│ │   │   └── home.tsx # Main dashboard page
+│ │   ├── products/
+│ │   │   └── products.tsx # Products page
+│ │   └── create_product/
+│ │       └── create_product.tsx # Create product page
+│ ├── routes/ # Route definitions
+│ │   ├── home.tsx # Home route
+│ │   ├── products.tsx # Products route
+│ │   └── create_product.tsx # Create product route
+│ ├── app.css # Global styles
+│ ├── root.tsx # Root component
+│ └── routes.ts # Route configuration
 ├── public/ # Static assets
+├── components.json # shadcn/ui configuration
+├── react-router.config.ts # React Router configuration
 ├── Dockerfile # Docker configuration
+├── tsconfig.json # TypeScript configuration
+├── vite.config.ts # Vite configuration
 └── package.json # Dependencies and scripts
 ```
 

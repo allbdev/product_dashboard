@@ -25,7 +25,7 @@ export const ProductsTable = () => {
       <Table className='relative'>
         <TableHeader className='sticky border-none top-0 z-10 bg-white shadow-[0_1px_0_0_rgb(229,231,235)]'>
           <TableRow>
-            <TableHead className='w-32'>Name</TableHead>
+            <TableHead className='w-32'>Title</TableHead>
             <TableHead className='max-w-36'>Description</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
