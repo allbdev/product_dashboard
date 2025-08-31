@@ -30,6 +30,7 @@ The application fetches and displays product data from the [DummyJSON API](https
 
 ## 📁 Project Structure
 
+```
 ├── app/
 │ ├── api/ # API layer
 │ │ ├── api.types.ts # Generic API types
@@ -50,6 +51,7 @@ The application fetches and displays product data from the [DummyJSON API](https
 ├── public/ # Static assets
 ├── Dockerfile # Docker configuration
 └── package.json # Dependencies and scripts
+```
 
 ## 🚀 Getting Started
 
