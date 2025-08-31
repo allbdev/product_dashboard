@@ -37,7 +37,7 @@ export const ProductsTable = () => {
         <TableBody>
           {products.data?.data?.products.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className='text-center' style={{ height: 'calc(10 * 2.7rem)' }}>
+              <TableCell colSpan={6} className='text-center' style={{ height: 'calc(10 * 2.7rem)' }}>
                 No products found, try changing the search query
               </TableCell>
             </TableRow>

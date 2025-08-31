@@ -15,11 +15,12 @@ import { useFilter } from '~/hooks/useFilter'
 import { Loader2 } from 'lucide-react'
 import { useCallback } from 'react'
 import { Skeleton } from '~/components/ui/skeleton'
+import { CategorySelect } from '~/components/custom/CategorySelect'
 
 export const CreateProduct = ({ productId }: { productId?: string }) => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { debouncedFilter, page } = useFilter()
+  const { debouncedFilter, page, category } = useFilter()
   const { mutate, isPending } = useMutation<CreateProductSchema, Error, any>({
     mutationFn: createProduct
   })
@@ -66,8 +67,8 @@ export const CreateProduct = ({ productId }: { productId?: string }) => {
             toast.success('Product has been updated', {
               description: 'You can now see the product in the products list'
             })
-            queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter] })
-            queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter] })
+            queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter, category] })
+            queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter, category] })
             navigate('/products')
           },
           onError: error => {
@@ -85,8 +86,8 @@ export const CreateProduct = ({ productId }: { productId?: string }) => {
           toast.success('Product has been created', {
             description: 'You can now see the product in the products list'
           })
-          queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter] })
-          queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter] })
+          queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter, category] })
+          queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter, category] })
           navigate('/products')
         },
         onError: error => {
@@ -97,7 +98,7 @@ export const CreateProduct = ({ productId }: { productId?: string }) => {
         }
       })
     },
-    [isEdit, mutate, queryClient, navigate, debouncedFilter, page, updateProductMutation]
+    [isEdit, mutate, queryClient, navigate, debouncedFilter, page, updateProductMutation, category]
   )
 
   const isLoading = form.formState.isLoading || isPending || isUpdatePending
@@ -123,8 +124,7 @@ export const CreateProduct = ({ productId }: { productId?: string }) => {
                   <Input id='description-1' placeholder='Enter description' {...form.register('description')} />
                 </div>
                 <div className='grid gap-3'>
-                  <Label htmlFor='category-1'>Category</Label>
-                  <Input id='category-1' placeholder='Enter category' {...form.register('category')} />
+                  <CategorySelect control={form.control} label='Category' />
                 </div>
                 <div className='flex gap-3'>
                   <div className='grid gap-3'>

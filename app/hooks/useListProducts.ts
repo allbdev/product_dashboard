@@ -31,7 +31,7 @@ export const PRODUCTS_QUERY_KEY = 'products'
 export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
   const { page, setPage } = useFilter()
   const firstLoad = useRef(true)
-  const { debouncedFilter } = useFilter()
+  const { debouncedFilter, category } = useFilter()
 
   useEffect(() => {
     // Reset page to 1 when filter changes
@@ -39,8 +39,8 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
   }, [debouncedFilter, setPage])
 
   const { data, error, isLoading, isFetching, isPlaceholderData } = useQuery({
-    queryKey: [PRODUCTS_QUERY_KEY, page, limit, debouncedFilter],
-    queryFn: () => getProducts({ page, limit, filter: debouncedFilter }),
+    queryKey: [PRODUCTS_QUERY_KEY, page, limit, debouncedFilter, category],
+    queryFn: () => getProducts({ page, limit, filter: debouncedFilter, category }),
     placeholderData: prev => prev
   })
 
@@ -79,11 +79,11 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
 }
 
 export const useListProductsInfinite = ({ limit = 10 }: UseListProductsProps): UseListProductsReturn => {
-  const { debouncedFilter } = useFilter()
+  const { debouncedFilter, category } = useFilter()
   const { data, error, isLoading, isFetching, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage } =
     useInfiniteQuery({
-      queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit, debouncedFilter],
-      queryFn: ({ pageParam = 1 }) => getProducts({ page: pageParam, limit, filter: debouncedFilter }),
+      queryKey: [PRODUCTS_QUERY_KEY, 'infinite', limit, debouncedFilter, category],
+      queryFn: ({ pageParam = 1 }) => getProducts({ page: pageParam, limit, filter: debouncedFilter, category }),
       getNextPageParam: (lastPage, pages) => {
         const currentTotal = pages.length * limit
 

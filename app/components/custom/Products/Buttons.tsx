@@ -18,14 +18,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useFilter } from '~/hooks/useFilter'
 import { PRODUCTS_QUERY_KEY } from '~/hooks/useListProducts'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export const Buttons = ({ product }: { product: Product }) => {
   const navigate = useNavigate()
 
   return (
     <div className='flex gap-2'>
-      <Button variant='ghost' onClick={() => navigate(`/products/edit_product/${product.id}`)}>
+      <Button variant='ghost' title='Edit product' onClick={() => navigate(`/products/edit_product/${product.id}`)}>
         <Pencil className='size-4' />
       </Button>
       <DeleteButton product={product} />
@@ -35,20 +35,20 @@ export const Buttons = ({ product }: { product: Product }) => {
 
 const DeleteButton = ({ product }: { product: Product }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const { debouncedFilter, page } = useFilter()
+  const { debouncedFilter, page, category } = useFilter()
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
     mutationFn: deleteProduct
   })
 
-  const onDelete = () => {
+  const onDelete = useCallback(() => {
     mutate(product.id.toString(), {
       onSuccess: () => {
         toast.success('Product has been deleted', {
           description: 'You can now see the product in the products list'
         })
-        queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter] })
-        queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter] })
+        queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, 'infinite', 25, debouncedFilter, category] })
+        queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY, page, 10, debouncedFilter, category] })
         setIsOpen(false)
       },
       onError: error => {
@@ -58,12 +58,12 @@ const DeleteButton = ({ product }: { product: Product }) => {
         console.error(error)
       }
     })
-  }
+  }, [debouncedFilter, page, category, queryClient, mutate, product.id])
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant='ghost'>
+        <Button variant='ghost' title='Delete product'>
           <Trash className='size-4 text-red-500' />
         </Button>
       </AlertDialogTrigger>
