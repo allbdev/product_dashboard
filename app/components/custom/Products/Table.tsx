@@ -5,6 +5,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import { TableSkeleton } from '../TableSkeleton'
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import { Buttons } from './Buttons'
+import { CategoryRender } from '../CategoryRender'
 
 export const ProductsTable = () => {
   const products = useListProducts({})
@@ -53,7 +54,9 @@ export const ProductsTable = () => {
                 <TableCell title={product.description} className='max-w-36 truncate'>
                   {product.description}
                 </TableCell>
-                <TableCell>{product.category}</TableCell>
+                <TableCell>
+                  <CategoryRender category={product.category} />
+                </TableCell>
                 <TableCell>
                   {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
                 </TableCell>

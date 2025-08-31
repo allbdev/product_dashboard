@@ -5,6 +5,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import type { Product } from '~/api/products.types'
 import { Skeleton } from '~/components/ui/skeleton'
 import { Buttons } from './Buttons'
+import { CategoryRender } from '../CategoryRender'
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -114,13 +115,16 @@ const ProductItem = ({ product }: { product: Product }) => {
         <img src={product.thumbnail} alt={product.title} className='object-contain size-20' />
         <div>
           <div className='text-sm font-medium'>{product.title}</div>
-          <div className='flex items-center gap-1'>
-            <div>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
-            <div className='text-sm text-gray-500'>- {product.stock} in stock</div>
-          </div>
         </div>
         <div className='flex grow justify-end'>
           <Buttons product={product} />
+        </div>
+      </div>
+      <div className='flex items-center justify-between gap-2'>
+        <CategoryRender category={product.category} />
+        <div className='flex items-center gap-1'>
+          <div>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}</div>
+          <div className='text-sm text-gray-500'>- {product.stock} in stock</div>
         </div>
       </div>
       <div className='text-sm text-gray-500 flex-1 line-clamp-5'>{product.description}</div>
@@ -137,13 +141,16 @@ const ProductItemSkeleton = () => {
           <div className='text-sm font-medium mb-2'>
             <Skeleton className='w-20 h-4' />
           </div>
-          <div className='flex items-center gap-1'>
-            <div>
-              <Skeleton className='w-20 h-4' />
-            </div>
-            <div className='text-sm text-gray-500'>
-              <Skeleton className='w-20 h-4' />
-            </div>
+        </div>
+      </div>
+      <div className='flex items-center justify-between gap-2'>
+        <Skeleton className='w-1/2 h-4' />
+        <div className='flex items-center gap-1'>
+          <div>
+            <Skeleton className='w-20 h-4' />
+          </div>
+          <div className='text-sm text-gray-500'>
+            <Skeleton className='w-20 h-4' />
           </div>
         </div>
       </div>
