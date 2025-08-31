@@ -1,8 +1,9 @@
-import { useListProducts } from '~/hooks/useListProducts'
+import { useListProducts, type UseListProductsReturn } from '~/hooks/useListProducts'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../../ui/table'
 import { Button } from '../../ui/button'
 import { ErrorMessage } from '../ErrorMessage'
 import { TableSkeleton } from '../TableSkeleton'
+import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 
 export const ProductsTable = () => {
   const products = useListProducts({})
@@ -23,18 +24,21 @@ export const ProductsTable = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Description</TableHead>
+          <TableHead className='w-32'>Name</TableHead>
+          <TableHead className='max-w-36'>Description</TableHead>
           <TableHead>Category</TableHead>
           <TableHead>Price</TableHead>
-          <TableHead>Quantity</TableHead>
+          <TableHead>Stock</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {products.data?.data?.products.map(product => (
           <TableRow key={product.id}>
-            <TableCell title={product.title} className='w-32 truncate'>
-              {product.title}
+            <TableCell title={product.title} className='w-32'>
+              <div className='flex items-center gap-2'>
+                <img src={product.thumbnail} alt={product.title} className='size-10' />
+                <span className='truncate'>{product.title}</span>
+              </div>
             </TableCell>
             <TableCell title={product.description} className='max-w-36 truncate'>
               {product.description}
@@ -50,23 +54,34 @@ export const ProductsTable = () => {
       <TableFooter>
         <TableRow>
           <TableCell colSpan={5}>
-            <div className='flex justify-end gap-2'>
-              <Button
-                disabled={products.isLoadingNextOrPreviousPage || !products.hasPreviousPage}
-                onClick={products.getPreviousPage}
-              >
-                Previous
-              </Button>
-              <Button
-                disabled={products.isLoadingNextOrPreviousPage || !products.hasNextPage}
-                onClick={products.getNextPage}
-              >
-                Next
-              </Button>
-            </div>
+            <Pagination products={products} />
           </TableCell>
         </TableRow>
       </TableFooter>
     </Table>
+  )
+}
+
+const Pagination = ({ products }: { products: UseListProductsReturn }) => {
+  return (
+    <div className='flex justify-end gap-2 items-center'>
+      <Button
+        variant='ghost'
+        disabled={products.isLoadingNextOrPreviousPage || !products.hasPreviousPage}
+        onClick={products.getPreviousPage}
+      >
+        {products.isLoadingNextOrPreviousPage ? <Loader2 className='animate-spin' /> : <ChevronLeft />}
+      </Button>
+      <span className='text-sm text-gray-500'>
+        {products.pageInfo?.init} - {products.pageInfo?.end} of {products.pageInfo?.total}
+      </span>
+      <Button
+        disabled={products.isLoadingNextOrPreviousPage || !products.hasNextPage}
+        onClick={products.getNextPage}
+        variant='ghost'
+      >
+        {products.isLoadingNextOrPreviousPage ? <Loader2 className='animate-spin' /> : <ChevronRight />}
+      </Button>
+    </div>
   )
 }

@@ -12,7 +12,7 @@ const cache = new CellMeasurerCache({
 
 export const ProductsList = () => {
   const { data, isLoadingNextOrPreviousPage, getNextPage, isLoading, error } = useListProductsInfinite({
-    limit: 50
+    limit: 25
   })
 
   // total is the total number of products that we expect to have

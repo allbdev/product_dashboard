@@ -17,6 +17,12 @@ export interface UseListProductsReturn {
   hasNextPage: boolean
   hasPreviousPage: boolean
   isLoadingNextOrPreviousPage: boolean
+  pageInfo?: {
+    page: number
+    init: number
+    end: number
+    total: number
+  }
 }
 
 export const PRODUCTS_QUERY_KEY = 'products'
@@ -45,6 +51,13 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
   const hasPreviousPage = page > 1
   const hasNextPage = data?.data?.total ? data?.data?.total > page * limit : false
 
+  const pageInfo = {
+    page,
+    init: (page - 1) * limit + 1,
+    end: data?.data?.total ? Math.min(page * limit, data?.data?.total) : page * limit,
+    total: data?.data?.total || 0
+  }
+
   return {
     data,
     isLoading: isLoading && firstLoad.current,
@@ -53,7 +66,8 @@ export const useListProducts = ({ limit = 10 }: UseListProductsProps): UseListPr
     getPreviousPage,
     hasNextPage,
     hasPreviousPage,
-    isLoadingNextOrPreviousPage: isFetching && isPlaceholderData && !firstLoad.current
+    isLoadingNextOrPreviousPage: isFetching && isPlaceholderData && !firstLoad.current,
+    pageInfo
   }
 }
 
