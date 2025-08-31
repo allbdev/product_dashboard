@@ -5,6 +5,8 @@ import type { Route } from './+types/root'
 import './app.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '~/components/ui/sidebar'
+import { AppSidebar } from '~/components/custom/AppSidebar'
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -32,7 +34,16 @@ export function Layout({ children }: { children: ReactNode }) {
           <Links />
         </head>
         <body>
-          {children}
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className='shrink-0 flex h-16 items-center gap-2 border-b border-sidebar-border px-4'>
+                <SidebarTrigger className='-ml-1' />
+                <h1 className='text-lg font-semibold'>Product Dashboard</h1>
+              </header>
+              <main className='flex-1 p-4 min-h-0'>{children}</main>
+            </SidebarInset>
+          </SidebarProvider>
           <ScrollRestoration />
           <Scripts />
         </body>
@@ -63,7 +74,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className='w-full p-4 overflow-x-auto'>
+        <pre className='w-full p-4'>
           <code>{stack}</code>
         </pre>
       )}

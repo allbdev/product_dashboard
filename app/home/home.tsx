@@ -9,5 +9,5 @@ export function Home() {
     return null
   }
 
-  return <main className='size-full p-4'>{isWide ? <ProductsTable /> : <ProductsList />}</main>
+  return <div className='size-full p-4'>{isWide ? <ProductsTable /> : <ProductsList />}</div>
 }
