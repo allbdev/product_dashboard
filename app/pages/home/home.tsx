@@ -4,7 +4,7 @@ import { Button } from '~/components/ui/button'
 
 export function Home() {
   return (
-    <div className='size-full p-4 flex flex-col gap-4'>
+    <div className='size-full p-4 flex flex-col gap-4 overflow-y-auto'>
       <div className='flex flex-col items-center justify-center min-h-96 text-center space-y-6'>
         <Package className='h-24 w-24' />
         <div className='space-y-4'>
